@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Alico\\My Drive\\Documents - google cloud\\Cirencester work - CW\\Comp Sci\\Lessons\\25-12-19 game of life\\25-12-19 game of life.csproj": {}
+    "C:\\Users\\Alico\\Documents\\GitHub repositories\\Conway-s-game-of-life-by-Alico\\25-12-19 game of life.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Alico\\My Drive\\Documents - google cloud\\Cirencester work - CW\\Comp Sci\\Lessons\\25-12-19 game of life\\25-12-19 game of life.csproj": {
+    "C:\\Users\\Alico\\Documents\\GitHub repositories\\Conway-s-game-of-life-by-Alico\\25-12-19 game of life.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Alico\\My Drive\\Documents - google cloud\\Cirencester work - CW\\Comp Sci\\Lessons\\25-12-19 game of life\\25-12-19 game of life.csproj",
+        "projectUniqueName": "C:\\Users\\Alico\\Documents\\GitHub repositories\\Conway-s-game-of-life-by-Alico\\25-12-19 game of life.csproj",
         "projectName": "25-12-19 game of life",
-        "projectPath": "C:\\Users\\Alico\\My Drive\\Documents - google cloud\\Cirencester work - CW\\Comp Sci\\Lessons\\25-12-19 game of life\\25-12-19 game of life.csproj",
+        "projectPath": "C:\\Users\\Alico\\Documents\\GitHub repositories\\Conway-s-game-of-life-by-Alico\\25-12-19 game of life.csproj",
         "packagesPath": "C:\\Users\\Alico\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Alico\\My Drive\\Documents - google cloud\\Cirencester work - CW\\Comp Sci\\Lessons\\25-12-19 game of life\\obj\\",
+        "outputPath": "C:\\Users\\Alico\\Documents\\GitHub repositories\\Conway-s-game-of-life-by-Alico\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Alico\\AppData\\Roaming\\NuGet\\NuGet.Config",

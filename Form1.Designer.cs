@@ -32,6 +32,7 @@
             ShowGrid = new Button();
             timer1 = new System.Windows.Forms.Timer(components);
             StartButton = new Button();
+            StepButton = new Button();
             SuspendLayout();
             // 
             // ShowGrid
@@ -47,7 +48,7 @@
             // 
             // timer1
             // 
-            timer1.Tick += timer1_Tick;
+            timer1.Tick += Next;
             // 
             // StartButton
             // 
@@ -60,17 +61,31 @@
             StartButton.UseVisualStyleBackColor = true;
             StartButton.Click += StartButton_Click;
             // 
+            // StepButton
+            // 
+            StepButton.Font = new Font("Calibri", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            StepButton.Location = new Point(763, 94);
+            StepButton.Name = "StepButton";
+            StepButton.Size = new Size(236, 76);
+            StepButton.TabIndex = 2;
+            StepButton.Text = "Step once";
+            StepButton.UseVisualStyleBackColor = true;
+            StepButton.Click += StepOnce;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.MistyRose;
             ClientSize = new Size(1231, 870);
+            Controls.Add(StepButton);
             Controls.Add(StartButton);
             Controls.Add(ShowGrid);
             Name = "Form1";
             Text = "Form1";
             ResumeLayout(false);
+
+            this.Resize += ResizeDetected;
         }
 
         #endregion
@@ -78,5 +93,6 @@
         private Button ShowGrid;
         private System.Windows.Forms.Timer timer1;
         private Button StartButton;
+        private Button StepButton;
     }
 }
