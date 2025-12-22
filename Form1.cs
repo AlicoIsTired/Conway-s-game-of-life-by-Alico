@@ -12,7 +12,6 @@ namespace _25_12_19_game_of_life
         private bool[,] b = new bool[intsize, intsize];
         public Form1()
         {
-            this.Width = 2;
             InitializeComponent();
             ShowGrid.Location = new Point(intspace, intspace); // spawn button to grid to be size
             ShowGrid.Width = intspace * intsize;
@@ -26,12 +25,12 @@ namespace _25_12_19_game_of_life
             StepButton.Width = buttonwidth;
             StepButton.Height = buttonheight;
 
-        } // move buttons around etc
+            Width = intspace * (intsize + 4) + buttonwidth; // form size
+            Height = intspace * (intsize + 4);
 
-        private void ResizeDetected(object sender, EventArgs e)
-        {
-            MessageBox.Show("Resize detected"); // temp
-        } // TODO: resize cell grid with window, and toridal array is needed 
+        } // move buttons around etc, initialise form
+        
+        // removed resize window thing
         private void ShowGrid_Click(object sender, EventArgs e)
         {
             int x = intspace;
@@ -85,22 +84,36 @@ namespace _25_12_19_game_of_life
             else
             {
                 btn.BackColor = dead_col;
-                
+
             } // kill cell
         } // player killing/resurrecting cells
-
         private bool CheckSquareLives(int x, int y)
         {
-            if (x >= 0 && y >= 0 && x < intsize && y < intsize)
+            if (x  < 0 || x >= intsize || y < 0  || y >= intsize)
             {
-                if (bs[x, y].BackColor == live_col)
+                if (x < 0)
                 {
-                    return true;
+                    x = intsize - 1;
                 }
-            } 
+                else if (x >= intsize)
+                {
+                    x = 0;
+                }
+                if (y < 0)
+                {
+                    y = intsize - 1;
+                }
+                else if (y >= intsize)
+                {
+                    y = 0;
+                }
+            } // wrap around edges if needed
+            if (bs[x, y].BackColor == live_col)
+            {
+                return true;
+            } // check if cell is alive or dead
             return false;
-        } // see if cell is alive, by checking the visible (button) grid
-
+        } // see if cell is alive, by checking the visible (button) grid, also handles wrapping
         private void Next(object sender, EventArgs e)
         {
             for (int i = 0; i < intsize; i++)
@@ -145,10 +158,9 @@ namespace _25_12_19_game_of_life
                 }
             } // update the visible grid to match the bool grid
         } // next generation
-
         private void StartButton_Click(object sender, EventArgs e)
         {
-            if (ShowGrid.Visible == false) 
+            if (ShowGrid.Visible == false)
             {
                 if (timer1.Enabled == false)
                 {
@@ -165,7 +177,7 @@ namespace _25_12_19_game_of_life
         } // start button
         private void StepOnce(object sender, EventArgs e)
         {
-            if (ShowGrid.Visible == false) 
+            if (ShowGrid.Visible == false)
             {
                 Next(sender, e);
             } // check if grid is made, by checking if the grid making button is visible. Made, step once

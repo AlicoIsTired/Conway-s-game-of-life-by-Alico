@@ -85,7 +85,9 @@
             Text = "Form1";
             ResumeLayout(false);
 
-            this.Resize += ResizeDetected;
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            // this.MinimizeBox = false;
         }
 
         #endregion
