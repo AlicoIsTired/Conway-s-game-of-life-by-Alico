@@ -37,14 +37,14 @@
             // 
             // ShowGrid
             // 
-            ShowGrid.Font = new Font("Calibri", 24F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            ShowGrid.Location = new Point(0, 0);
+            ShowGrid.Font = new Font("Calibri", 20F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            ShowGrid.Location = new Point(5, 5);
             ShowGrid.Name = "ShowGrid";
-            ShowGrid.Size = new Size(674, 660);
+            ShowGrid.Size = new Size(205, 100);
             ShowGrid.TabIndex = 0;
-            ShowGrid.Text = "Show grid\r\n";
+            ShowGrid.Text = "Show grid";
             ShowGrid.UseVisualStyleBackColor = true;
-            ShowGrid.Click += ShowGrid_Click;
+            ShowGrid.Click += ShowGridClick;
             // 
             // timer1
             // 
@@ -52,41 +52,44 @@
             // 
             // StartButton
             // 
+            StartButton.Enabled = false;
             StartButton.Font = new Font("Calibri", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            StartButton.Location = new Point(763, 12);
+            StartButton.ForeColor = SystemColors.ControlText;
+            StartButton.Location = new Point(5, 110);
             StartButton.Name = "StartButton";
-            StartButton.Size = new Size(236, 76);
+            StartButton.Size = new Size(100, 100);
             StartButton.TabIndex = 1;
             StartButton.Text = "Start";
             StartButton.UseVisualStyleBackColor = true;
-            StartButton.Click += StartButton_Click;
+            StartButton.Click += StartButtonClick;
             // 
             // StepButton
             // 
+            StepButton.Enabled = false;
             StepButton.Font = new Font("Calibri", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            StepButton.Location = new Point(763, 94);
+            StepButton.ForeColor = SystemColors.ControlText;
+            StepButton.Location = new Point(110, 110);
             StepButton.Name = "StepButton";
-            StepButton.Size = new Size(236, 76);
+            StepButton.Size = new Size(100, 100);
             StepButton.TabIndex = 2;
             StepButton.Text = "Step once";
             StepButton.UseVisualStyleBackColor = true;
-            StepButton.Click += StepOnce;
+            StepButton.Click += Next;
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.MistyRose;
-            ClientSize = new Size(1231, 870);
+            BackColor = Color.LightCyan;
+            ClientSize = new Size(1231, 704);
             Controls.Add(StepButton);
             Controls.Add(StartButton);
             Controls.Add(ShowGrid);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
             Name = "Form1";
-            Text = "Form1";
+            Text = "Conway's game of life";
             ResumeLayout(false);
-
-            this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            this.MaximizeBox = false;
             // this.MinimizeBox = false;
         }
 
