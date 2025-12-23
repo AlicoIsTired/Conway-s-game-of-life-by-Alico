@@ -42,9 +42,9 @@
             ShowGrid.Name = "ShowGrid";
             ShowGrid.Size = new Size(205, 100);
             ShowGrid.TabIndex = 0;
-            ShowGrid.Text = "Show grid";
+            ShowGrid.Text = "Reset grid";
             ShowGrid.UseVisualStyleBackColor = true;
-            ShowGrid.Click += ShowGridClick;
+            ShowGrid.Click += ResetGridClick;
             // 
             // timer1
             // 
@@ -52,7 +52,6 @@
             // 
             // StartButton
             // 
-            StartButton.Enabled = false;
             StartButton.Font = new Font("Calibri", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             StartButton.ForeColor = SystemColors.ControlText;
             StartButton.Location = new Point(5, 110);
@@ -65,7 +64,6 @@
             // 
             // StepButton
             // 
-            StepButton.Enabled = false;
             StepButton.Font = new Font("Calibri", 18F, FontStyle.Regular, GraphicsUnit.Point, 0);
             StepButton.ForeColor = SystemColors.ControlText;
             StepButton.Location = new Point(110, 110);

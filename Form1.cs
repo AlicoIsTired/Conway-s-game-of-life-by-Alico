@@ -28,24 +28,21 @@ namespace _25_12_19_game_of_life
             Width = cellSize * (gridSize + 1) + 2 * buttonSize + 4 * spacing; // form size, the plus one is since the grid's actual size is gridsize + 1
             Height = (cellSize + 1) * (gridSize + 1) + (2 * spacing); // don't question why its cellSize + 1, I don't freaking know why its needed
 
+            CreateGrid();
         } // move buttons around etc, initialise form
-        private void ShowGridClick(object sender, EventArgs e)
+        private void ResetGridClick(object sender, EventArgs e)
         {
-            if (ShowGrid.Text == "Show grid")
+            
+            for (int i = 0; i < gridSize; i++)
             {
-                CreateGrid(sender, e);
-                ShowGrid.Text = "Reset grid";
-                StartButton.Enabled = true;
-                StepButton.Enabled = true;
+                for (int j = 0; j < gridSize; j++)
+                {
+                    Controls.Remove(buttonArray[i, j]);
+                }
             }
-            //else
-            //{
-            //    buttonArray = new Button[gridSize, gridSize];
-            //    boolArray = new bool[gridSize, gridSize];
-            //    CreateGrid(sender, e);
-            //} // TODO:                                   ------------------------------------------------------------------------------
-        }
-        private void CreateGrid(object sender, EventArgs e)
+            CreateGrid();
+        } // reset grid button
+        private void CreateGrid()
         {
             int x = 3 * spacing + 2 * buttonSize;
             int y = spacing;
