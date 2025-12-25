@@ -4,12 +4,10 @@ namespace _25_12_19_game_of_life
     {
         const int gridSize = 30; // 30x30 grid
         const int cellSize = 25; // cell size
-        const int spacing = 5; // spacing between buttons/grid
-        const int buttonSize = 100; // size of buttons, some may be double this horizontally
         int cellPersistance = 50;
         private readonly Color live_col = Color.MistyRose;
-        private Button[,] buttonArray = new Button[gridSize, gridSize];
-        private int[,] aliveArray = new int[gridSize, gridSize];
+        private readonly Button[,] buttonArray = new Button[gridSize, gridSize];
+        private readonly int[,] aliveArray = new int[gridSize, gridSize];
         public Form1()
         {
             InitializeComponent();
@@ -33,18 +31,13 @@ namespace _25_12_19_game_of_life
         } // reset grid button
         private void CreateGrid()
         {
-            int x = 3 * spacing + 2 * buttonSize;
-            int y = spacing;
+            int x = 215;
+            int y = 5;
 
             for (int row = 0; row < gridSize; row++)
             {
-                x = 3 * spacing + 2 * buttonSize;
-                for (int column = 0; column
-
-
-
-
-                    < gridSize; column++)
+                x = 215;
+                for (int column = 0; column < gridSize; column++)
                 {
                     Button newb = new()
                     {
@@ -201,30 +194,20 @@ namespace _25_12_19_game_of_life
         } // speed adjusting slider
 
         private void AdjustDeadCellPersistance(object sender, ScrollEventArgs e)
-        {/*
-            for (int row = 0; row < gridSize; row++)
+        {
+            
+            if (PersistanceSlider.Value != cellPersistance)
             {
-                for (int column = 0; column < gridSize; column++)
+                int oldPersistance = cellPersistance;
+                cellPersistance = PersistanceSlider.Value;
+                for (int row = 0; row < gridSize; row++)
                 {
-                    if (aliveArray[row, column] < cellPersistance)
+                    for (int column = 0; column < gridSize; column++)
                     {
-                        aliveArray[row, column] = PersistanceSlider.Value * aliveArray[row, column] / cellPersistance;
-                    }
-                    else
-                    {
-                        //aliveArray[row, column] = PersistanceSlider.Value;
+                        aliveArray[row, column] = aliveArray[row, column] * PersistanceSlider.Value / oldPersistance;
                     }
                 }
             }
-            cellPersistance = PersistanceSlider.Value;
-
-            for (int row = 0; row < gridSize; row++)
-            {
-                for (int column = 0; column < gridSize; column++)
-                {
-                    DeadCellColor(row, column, false);
-                }
-            }
-        */}
+        }
     }
 }
