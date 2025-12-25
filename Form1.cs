@@ -6,33 +6,22 @@ namespace _25_12_19_game_of_life
         const int cellSize = 25; // cell size
         const int spacing = 5; // spacing between buttons/grid
         const int buttonSize = 100; // size of buttons, some may be double this horizontally
+        int cellPersistance = 50;
         private readonly Color live_col = Color.MistyRose;
-        private readonly Color dead_col = Color.White;
         private Button[,] buttonArray = new Button[gridSize, gridSize];
-        private bool[,] boolArray = new bool[gridSize, gridSize];
+        private int[,] aliveArray = new int[gridSize, gridSize];
         public Form1()
         {
             InitializeComponent();
-            ShowGrid.Location = new Point(spacing, spacing); // show grid button position and size
-            ShowGrid.Width = 2 * buttonSize + spacing;
-            ShowGrid.Height = buttonSize;
-
-            StartButton.Location = new Point(spacing, 2 * spacing + buttonSize); // start button position and size
-            StartButton.Width = buttonSize;
-            StartButton.Height = buttonSize;
-
-            StepButton.Location = new Point(2 * spacing + buttonSize, 2 * spacing + buttonSize); // step button position and size
-            StepButton.Width = buttonSize;
-            StepButton.Height = buttonSize;
-
-            Width = cellSize * (gridSize + 1) + 2 * buttonSize + 4 * spacing; // form size, the plus one is since the grid's actual size is gridsize + 1
-            Height = (cellSize + 1) * (gridSize + 1) + (2 * spacing); // don't question why its cellSize + 1, I don't freaking know why its needed
+            SpeedTimer.Interval = SpeedSlider.Value;
 
             CreateGrid();
         } // move buttons around etc, initialise form
         private void ResetGridClick(object sender, EventArgs e)
         {
-            
+            SpeedTimer.Enabled = false;
+            StepButton.Enabled = true;
+            StartButton.BackColor = Color.White;
             for (int i = 0; i < gridSize; i++)
             {
                 for (int j = 0; j < gridSize; j++)
@@ -47,21 +36,30 @@ namespace _25_12_19_game_of_life
             int x = 3 * spacing + 2 * buttonSize;
             int y = spacing;
 
-            for (int i = 0; i < gridSize; i++)
+            for (int row = 0; row < gridSize; row++)
             {
                 x = 3 * spacing + 2 * buttonSize;
-                for (int j = 0; j < gridSize; j++)
+                for (int column = 0; column
+
+
+
+
+                    < gridSize; column++)
                 {
-                    Button newb = new Button();
-                    newb.Top = y;
-                    newb.Left = x;
-                    newb.Height = cellSize;
-                    newb.Width = cellSize;
+                    Button newb = new()
+                    {
+                        Top = y,
+                        Left = x,
+                        Height = cellSize,
+                        Width = cellSize
+                    };
+#pragma warning disable CS8622 
                     newb.Click += new EventHandler(AnyButtonClick);
-                    newb.BackColor = dead_col;
+#pragma warning restore CS8622 
+                    newb.BackColor = Color.White;
                     newb.FlatStyle = FlatStyle.Flat;
-                    buttonArray[i, j] = newb;
-                    boolArray[i, j] = false;
+                    buttonArray[row, column] = newb;
+                    aliveArray[row, column] = 0;
 
                     Controls.Add(newb);
                     x += cellSize;
@@ -73,28 +71,29 @@ namespace _25_12_19_game_of_life
         private void AnyButtonClick(object sender, EventArgs e)
         {
             Button btn = (Button)sender;
-            int fx = -1;
-            int fy = -1;
-            for (int x = 0; x < gridSize; x++)
+            int btnRow = -1;
+            int btnColumn = -1;
+            for (int rowBeingChecked = 0; rowBeingChecked < gridSize; rowBeingChecked++)
             {
-                for (int y = 0; y < gridSize; y++)
+                for (int columnBeingChecked = 0; columnBeingChecked < gridSize; columnBeingChecked++)
                 {
-                    if (buttonArray[x, y] == btn)
+                    if (buttonArray[rowBeingChecked, columnBeingChecked] == btn)
                     {
-                        fx = x;
-                        fy = y;
+                        btnRow = rowBeingChecked;
+                        btnColumn = columnBeingChecked;
                     }
                 }
             } // find cell
 
-            boolArray[fx, fy] = !boolArray[fx, fy];
-            if (boolArray[fx, fy])
+            if (aliveArray[btnRow, btnColumn] != cellPersistance)
             {
+                aliveArray[btnRow, btnColumn] = cellPersistance;
                 btn.BackColor = live_col;
             } // set cell alive
             else
             {
-                btn.BackColor = dead_col;
+                aliveArray[btnRow, btnRow] = cellPersistance;
+                DeadCellColor(btnRow, btnColumn, true);
 
             } // kill cell
         } // player killing/resurrecting cells
@@ -127,68 +126,105 @@ namespace _25_12_19_game_of_life
         } // see if cell is alive, by checking the visible (button) grid, also handles wrapping
         private void Next(object sender, EventArgs e)
         {
-            for (int i = 0; i < gridSize; i++)
+            for (int row = 0; row < gridSize; row++)
             {
-                for (int j = 0; j < gridSize; j++)
+                for (int column = 0; column < gridSize; column++)
                 {
                     int liveNum = 0;
-                    liveNum += Convert.ToInt16(CheckSquareLives(i - 1, j - 1));
-                    liveNum += Convert.ToInt16(CheckSquareLives(i - 1, j));
-                    liveNum += Convert.ToInt16(CheckSquareLives(i - 1, j + 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row - 1, column - 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row - 1, column));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row - 1, column + 1));
 
-                    liveNum += Convert.ToInt16(CheckSquareLives(i, j - 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row, column - 1));
 
-                    liveNum += Convert.ToInt16(CheckSquareLives(i, j + 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row, column + 1));
 
-                    liveNum += Convert.ToInt16(CheckSquareLives(i + 1, j - 1));
-                    liveNum += Convert.ToInt16(CheckSquareLives(i + 1, j));
-                    liveNum += Convert.ToInt16(CheckSquareLives(i + 1, j + 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row + 1, column - 1));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row + 1, column));
+                    liveNum += Convert.ToInt16(CheckSquareLives(row + 1, column + 1));
 
                     if (liveNum == 3)
                     {
-                        boolArray[i, j] = true;
+                        aliveArray[row, column] = cellPersistance;
                     } // spawn new cell
-                    else if (liveNum < 2 || liveNum > 3)
+                    else if (aliveArray[row, column] == cellPersistance && (liveNum < 2 || liveNum > 3))
                     {
-                        boolArray[i, j] = false;
+                        aliveArray[row, column] = cellPersistance - 1;
                     } // kill cell
                 }
             } // deciding which cells to kill/resurrect
-            for (int i = 0; i < gridSize; i++)
+            for (int row = 0; row < gridSize; row++)
             {
-                for (int j = 0; j < gridSize; j++)
+                for (int column = 0; column < gridSize; column++)
                 {
-                    if (boolArray[i, j])
+                    if (aliveArray[row, column] == cellPersistance)
                     {
-                        buttonArray[i, j].BackColor = live_col;
+                        buttonArray[row, column].BackColor = live_col;
                     }
                     else
                     {
-                        buttonArray[i, j].BackColor = dead_col;
+                        DeadCellColor(row, column, true);
                     }
                 }
             } // update the visible grid to match the bool grid
         } // next generation, this is also used for the step button
+
+        private void DeadCellColor(int row, int column, bool decay)
+        {
+            int colorValue = 255 - (40 * aliveArray[row, column] / cellPersistance);
+            buttonArray[row, column].BackColor = Color.FromArgb(colorValue, colorValue, colorValue);
+            if (decay && aliveArray[row, column] > 0)
+            {
+                aliveArray[row, column]--;
+            }
+        }
         private void StartButtonClick(object sender, EventArgs e)
         {
-            if (ShowGrid.Text != "Show grid")
+            if (SpeedTimer.Enabled == false)
             {
-                if (timer1.Enabled == false)
-                {
-                    StartButton.BackColor = live_col;
-                    timer1.Enabled = true;
-                    StepButton.ForeColor = Color.LightGray;
-                    StepButton.Enabled = false;
-                } // start timer, disable step button
-                else
-                {
-
-                    StartButton.BackColor = Color.White;
-                    timer1.Enabled = false;
-                    StepButton.ForeColor = Color.Black;
-                    StepButton.Enabled = true;
-                } // stop timer, enable step button
-            } // check if grid is made, by checking if the grid making button is visible
+                StartButton.BackColor = live_col;
+                SpeedTimer.Enabled = true;
+                StepButton.Enabled = false;
+                StepButton.ForeColor = Color.Gray;
+            } // start timer
+            else
+            {
+                StartButton.BackColor = Color.White;
+                SpeedTimer.Enabled = false;
+                StepButton.Enabled = true;
+                StepButton.ForeColor = Color.Black;
+            } // stop timer
         } // start button
+        private void AdjustSpeed(object sender, ScrollEventArgs e)
+        {
+            SpeedTimer.Interval = SpeedSlider.Value;
+        } // speed adjusting slider
+
+        private void AdjustDeadCellPersistance(object sender, ScrollEventArgs e)
+        {/*
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int column = 0; column < gridSize; column++)
+                {
+                    if (aliveArray[row, column] < cellPersistance)
+                    {
+                        aliveArray[row, column] = PersistanceSlider.Value * aliveArray[row, column] / cellPersistance;
+                    }
+                    else
+                    {
+                        //aliveArray[row, column] = PersistanceSlider.Value;
+                    }
+                }
+            }
+            cellPersistance = PersistanceSlider.Value;
+
+            for (int row = 0; row < gridSize; row++)
+            {
+                for (int column = 0; column < gridSize; column++)
+                {
+                    DeadCellColor(row, column, false);
+                }
+            }
+        */}
     }
 }

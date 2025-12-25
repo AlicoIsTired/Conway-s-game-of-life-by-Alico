@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("25-12-19 game of life")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df317dd07a304816578dc3f38d9f50c063b79bd4")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+11c83a43b026e771ada8a47c6af9b6e0fb518dd0")]
 [assembly: System.Reflection.AssemblyProductAttribute("25-12-19 game of life")]
 [assembly: System.Reflection.AssemblyTitleAttribute("25-12-19 game of life")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
